@@ -7,7 +7,7 @@ import Display from "./Display";
 export default function Input() {
   const [temps, setTemps] = useState(0);
   const [search, setSearch] = useState("");
-  //   const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const chngeHandler = (e) => {
     setSearch(e.target.value);
@@ -16,7 +16,7 @@ export default function Input() {
   const handleEnterBtn = (e) => {
     if (e.keyCode === 13) {
       fetchWeather(search);
-      setSearch("")
+      setSearch("");
     }
   };
 
@@ -25,6 +25,7 @@ export default function Input() {
   //   };
 
   const fetchWeather = (srchText) => {
+    setLoad(true);
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${srchText}&units=metric&&appid=8119af36ee9af28518f9d72f78b934d8`
@@ -46,7 +47,8 @@ export default function Input() {
           name,
         };
         setTemps(tempInfo);
-        console.log(tempInfo);
+        setLoad(false);
+        // console.log(tempInfo);
       })
       .catch((err) => {
         console.log(err);
@@ -60,19 +62,26 @@ export default function Input() {
 
   return (
     <>
-      <Display tempD={temps} srch={search} />
-      <div className="srch">
-        <input
-          placeholder="Search With City"
-          id="inp"
-          value={search}
-          onChange={chngeHandler}
-          onKeyDown={handleEnterBtn}
-        />
-        {/* <button className="srchBtn" onClick={handleClick}>
+    <Display tempD={temps} srch={search} />
+      {load ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div className="srch">
+          <input
+            placeholder="Search With City"
+            id="inp"
+            value={search}
+            onChange={chngeHandler}
+            onKeyDown={handleEnterBtn}
+          />
+        </div>
+      )}
+      
+
+      {/* <button className="srchBtn" onClick={handleClick}>
     🔍
     </button> */}
-      </div>
+      {/* </div> */}
     </>
   );
 }
