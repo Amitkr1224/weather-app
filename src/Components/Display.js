@@ -4,11 +4,9 @@ import "../Styles/Temp.css";
 export default function Display({ tempD, srch }) {
   return (
     <>
-      {tempD ? (
-        <div className="conatiner1">
-          <h1>{tempD.name}</h1>
-        </div>
-      ) : null}
+      <div className="conatiner1">
+        <h1>{tempD.name}</h1>
+      </div>
 
       <div className="conatiner">
         <img
